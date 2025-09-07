@@ -4,29 +4,25 @@ Write-Host "Estos son los archivos en tu carpeta actual:"
 ls -File
 Write-Host "---"
 
-# --- PASO 2: SELECCIÓN DE ARCHIVOS (git add) ---
-Write-Host "`nEscribe 'todos' para agregar todos los cambios."
-Write-Host "O bien, escribe el nombre de un archivo (ej. 'index.html')."
-Write-Host "Escribe 'listo' cuando hayas terminado."
-
-$addOption = ""
-do {
-    $addOption = Read-Host "Archivo a agregar"
-    if ($addOption -eq "todos") {
-        git add .
-        break
-    } elseif ($addOption -ne "listo") {
-        git add $addOption
-    }
-} while ($addOption -ne "listo")
-
-# --- PASO 3: INFORMACIÓN DEL COMMIT Y LA RAMA ---
-$branchName = Read-Host "`nIngresa el nombre de la rama a la que quieres subir (ej. 'feature/nueva-funcionalidad')"
+# --- PASO 2: INFORMACIÓN DEL COMMIT Y LA RAMA ---
+$branchName = Read-Host "`nIngresa el nombre de la nueva rama (ej. 'nueva-funcionalidad')"
 $commitMessage = Read-Host "Ahora, ingresa un mensaje para el commit (ej. 'Resuelve PROYECTO-25')"
 
-# --- PASO 4: EJECUTAR LOS COMANDOS ---
+# --- PASO 3: EJECUTAR LOS COMANDOS ---
+# Se crea y cambia a la nueva rama
+Write-Host "`nCreando y cambiando a la rama '$branchName'..."
+git checkout -b $branchName
+
+# Se agrega todos los archivos de una vez para evitar errores
+Write-Host "`nAgregando todos los cambios para el commit..."
+git add .
+
 Write-Host "`nCreando el commit..."
 git commit -m $commitMessage
+
+# Se sincronizan los cambios antes de subir
+Write-Host "`nSincronizando con el repositorio remoto..."
+git pull origin $branchName
 
 Write-Host "`nSubiendo los cambios a la rama '$branchName'..."
 git push -u origin $branchName

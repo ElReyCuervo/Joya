@@ -1,7 +1,7 @@
 # Pide la información al usuario
 $gitUser = Read-Host "Por favor, ingresa tu nombre de usuario para Git"
 $gitEmail = Read-Host "Ahora, ingresa tu correo electrónico para Git"
-$gitRepo = Read-Host "Finalmente, pega el link de tu repositorio de GitHub"
+$gitRepo = Read-Host "Finalmente, pega el link de tu repositorio de GitHub al final coloca .git"
 
 # Configura la identidad de Git
 Write-Host "`nConfigurando la identidad de Git..."
